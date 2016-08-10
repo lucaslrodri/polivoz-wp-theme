@@ -35,7 +35,7 @@
                          'soundcloud' => 'SoundCloud');
         foreach($social_data as $key => $url){
             if ($url!=""){
-               echo '<a href="'.$url.'" target="_blank" class="btn social-icons" data-placement="bottom" data-toggle="tooltip" title="'.$social_name[$key].'"><span data-toggle="tooltip" class="polivoz-icon '.$social_icon[$key].'"></span></a>&nbsp;';
+               echo '<a href="http://'.$url.'" target="_blank" class="btn social-icons" data-placement="bottom" data-toggle="tooltip" title="'.$social_name[$key].'"><span data-toggle="tooltip" class="polivoz-icon '.$social_icon[$key].'"></span></a>&nbsp;';
             }
         }
         ?>

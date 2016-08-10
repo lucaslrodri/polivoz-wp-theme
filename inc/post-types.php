@@ -1084,15 +1084,9 @@ function polivoz_home_social_callback($post) {
     echo '<p>Adicione os dados das mídias sociais que vai aparecer na página inicial na seção de contatos. Os endereços não devem incluir o <code>http://</code>. Ex: <code>www.facebook.com/minha_pagina</code>. Caso queira que um item não apareça deixe em branco.</p>';
     echo '<ul class="form-no-clear">';
     foreach ($list_values as $key => $name) {
-        echo '<li><label>' . $name . '</li><li><input type ="text" id="polivoz_home_social_field_'.$key.'" name="'.polivoz_home_social_field.'['.$key.']" value="'.sanitize_polivoz_url($value[$key]).'" class="widefat"/></label></li>';
+        echo '<li><label>' . $name . '</li><li><input type ="text" id="polivoz_home_social_field_'.$key.'" name="'.polivoz_home_social_field.'['.$key.']" value="'.polivoz_sanitize_url($value[$key]).'" class="widefat"/></label></li>';
     }
     echo '</ul>';
-}
-
-function sanitize_polivoz_url($input){
-    $output = esc_url($input);
-    $output = str_replace(array('http://','https://'), '', $output);
-    return $output;
 }
 
 function polivoz_save_home_social_data($post_id) {
@@ -1106,10 +1100,15 @@ function polivoz_save_home_social_data($post_id) {
         return;
     }
     $my_data = $_POST['polivoz_home_social_field'];
-    foreach ($my_data as $key => $url){
-        $my_data[$key]=sanitize_polivoz_url($url);
+    foreach ($my_data as $key => $field) {
+        $my_data[$key] = polivoz_sanitize_url($field);
     }
     update_post_meta($post_id, '_home_social_key', $my_data);
+}
+
+function polivoz_sanitize_url($input){
+    $output = str_ireplace(array('http://','https://'), '', esc_url($input));
+    return $output;
 }
 
 
