@@ -568,7 +568,9 @@ function polivoz_save_music_list_shortcode_data($post_id) {
         return;
     }
     $my_data = $_POST['polivoz_music_list_shortcode_field'];
-    update_post_meta($post_id, '_music_list_shortcode_key', $my_data);
+    $my_data_sanitize['title'] = sanitize_text_field($my_data['title']);
+    $my_data_sanitize['code'] = esc_attr($my_data['code']);
+    update_post_meta($post_id, '_music_list_shortcode_key', $my_data_sanitize);
 }
 
 /* ----------------------------------------------------------------------------/
@@ -614,10 +616,16 @@ function polivoz_save_music_list_iframe_data($post_id) {
         return;
     }
     $my_data = $_POST['polivoz_music_list_iframe_field'];
-    $my_data = array_filter($my_data,function($value){
-        return($value['title'] !== '' && $value['code']!=='');});
+    $my_data = array_values(array_filter($my_data,function($value){return($value['title'] !== '' && $value['code']!=='');}));
+    $my_data_count = (count($my_data)>4)?4:count($my_data);
+    $my_data_sanitize = array();
+    for($i=0; $i<=$my_data_count-1;$i++){
+        $my_data_sanitize[$i]['title'] = sanitize_text_field($my_data[$i]['title']);
+        $my_data_sanitize[$i]['code'] = esc_attr($my_data[$i]['code']);
+        $my_data_sanitize[$i]['responsive'] = ((esc_attr($my_data[$i]['responsive'])!='yes')?'no':'yes');
+    }
     
-    update_post_meta($post_id, '_music_list_iframe_key', array_values($my_data));
+    update_post_meta($post_id, '_music_list_iframe_key',  $my_data_sanitize);
 }
 
 /* ----------------------------------------------------------------------------/
@@ -650,8 +658,6 @@ function polivoz_music_list_pdfs_callback($post) {
         echo '</div>';
     }
     echo '<input type="button" class="button button-primary '.($qtd>=$max_list?'hidden':'').'" id="add_new_pdfs" value="Adicionar item"/>';
-    ?>
-<?php
     echo '<p>Esse espaço é usado para postar os links das partituras (Em formato de documento PDF ou similares). Podendo estes serem links externos ao site (com endereço completo) ou internos (apenas o slug).</p>';
 }
 
@@ -666,10 +672,19 @@ function polivoz_save_music_list_pdfs_data($post_id) {
         return;
     }
     $my_data = $_POST['polivoz_music_list_pdfs_field'];
-    $my_data = array_filter($my_data,function($value){
-        return($value['title'] !== '' && $value['code']!=='');});
-    
-    update_post_meta($post_id, '_music_list_pdfs_key', array_values($my_data));
+    $my_data = array_values(array_filter($my_data,function($value){return($value['title'] !== '' && $value['code']!=='');}));
+    $my_data_count = (count($my_data)>20)?20:count($my_data);
+    $my_data_sanitize = array();
+    for($i=0; $i<=$my_data_count-1;$i++){
+        $my_data_sanitize[$i]['title'] = sanitize_text_field($my_data[$i]['title']);
+        $my_data_sanitize[$i]['external'] = ((esc_attr($my_data[$i]['external'])!='no')?'yes':'no');
+        $my_data_sanitize[$i]['code'] = polivoz_sanitize_url($my_data[$i]['code']);
+        if($my_data_sanitize[$i]['external']=='yes'){
+            $my_data_sanitize[$i]['code'] = 'http://'.$my_data_sanitize[$i]['code'];
+        }
+        $my_data_sanitize[$i]['forcedownload'] = ((esc_attr($my_data[$i]['forcedownload'])=='true')?'true':'false');
+    }
+    update_post_meta($post_id, '_music_list_pdfs_key',  $my_data_sanitize);
 }
 
 /* ----------------------------------------------------------------------------/
@@ -701,10 +716,9 @@ function polivoz_music_list_mp3_callback($post) {
         echo '</div>';
     }
     echo '<input type="button" class="button button-primary '.($qtd>=$max_list?'hidden':'').'" id="add_new_mp3" value="Adicionar item"/>';
-    ?>
-<?php
     echo '<p>Esse espaço é usado para postar os links de formatos de músicas. Podendo estes serem links externos ao site (com endereço completo) ou internos (apenas o slug do site ex: www.meusite.com/<code>meu_slug_parte1/meu_slug_parte2</code>).</p>';
 }
+
 
 function polivoz_save_music_list_mp3_data($post_id) {
     if (!isset($_POST['polivoz_music_list_mp3_nonce'])) {
@@ -717,10 +731,20 @@ function polivoz_save_music_list_mp3_data($post_id) {
         return;
     }
     $my_data = $_POST['polivoz_music_list_mp3_field'];
-    $my_data = array_filter($my_data,function($value){
-        return($value['title'] !== '' && $value['code']!=='');});
-    
-    update_post_meta($post_id, '_music_list_mp3_key', array_values($my_data));
+    $my_data = array_values(array_filter($my_data,function($value){return($value['title'] !== '' && $value['code']!=='');}));
+    $my_data_count = (count($my_data)>20)?20:count($my_data);
+    $my_data_sanitize = array();
+    for($i=0; $i<=$my_data_count-1;$i++){
+        $my_data_sanitize[$i]['title'] = sanitize_text_field($my_data[$i]['title']);
+        $my_data_sanitize[$i]['code'] = polivoz_sanitize_url($my_data[$i]['code']);
+        $my_data_sanitize[$i]['external'] = ((esc_attr($my_data[$i]['external'])!='no')?'yes':'no');
+        if($my_data_sanitize[$i]['external']=='yes'){
+            $my_data_sanitize[$i]['code'] = 'http://'.$my_data_sanitize[$i]['code'];
+        }
+        $my_data_sanitize[$i]['forcedownload'] = ((esc_attr($my_data[$i]['forcedownload'])!='true')?'false':'true');
+        $my_data_sanitize[$i]['external'] = ((esc_attr($my_data[$i]['external'])!='no')?'yes':'no');
+    }
+    update_post_meta($post_id, '_music_list_mp3_key',  $my_data_sanitize);
 }
 
 
@@ -838,7 +862,9 @@ function polivoz_save_visibility_data($post_id) {
     update_post_meta($post_id, '_visibility_featured_key', esc_attr($featured));
     if (isset($_POST['polivoz_visibility_field_data'])) {
         $data = $_POST['polivoz_visibility_field_data'];
-        update_post_meta($post_id, '_visibility_data_key', $data);
+        $data_sanitize['subtitle'] = sanitize_text_field($data['subtitle']);
+        $data_sanitize['permanlink'] = polivoz_sanitize_url($data['permanlink'],array(get_home_url().'/','http://','https://'));
+        update_post_meta($post_id, '_visibility_data_key', $data_sanitize);
     }
 }
 
@@ -1030,7 +1056,7 @@ function polivoz_save_home_form_shortcode_data($post_id) {
         return;
     }
     $my_data = $_POST['polivoz_home_form_shortcode_field'];
-    update_post_meta($post_id, '_home_form_shortcode_key', $my_data);
+    update_post_meta($post_id, '_home_form_shortcode_key', esc_attr($my_data));
 }
 
 /* ----------------------------------------------------------------------------/
@@ -1045,12 +1071,11 @@ function polivoz_home_contact_callback($post) {
         'email' => 'E-mail para contato',
         'mobile' => 'Telefone celular para contato',
         'phone' => 'Telefone fixo para contato',
-        'email' => 'E-mail para contato',
         'address' => 'Endereço');
     echo '<p>Adicione os dados para contato que vai aparecer na página inicial na seção de contatos. Caso queira que um item não apareça deixe em branco.</p>';
     echo '<ul class="form-no-clear">';
     foreach ($list_values as $key => $name) {
-        echo '<li><label>'.$name.'</li><li><input type ="text" id="polivoz_home_contact_field_'.$key.'" name="polivoz_home_contact_field['.$key.']" value="'.esc_attr($value[$key]).'" class="widefat"/></label></li>';
+        echo '<li><label>'.$name.'</li><li><input type ="'.(($key=='email')?'email':'text').'" id="polivoz_home_contact_field_'.$key.'" name="polivoz_home_contact_field['.$key.']" value="'.esc_attr($value[$key]).'" class="widefat"/></label></li>';
     }
     echo '</ul>';
 }
@@ -1066,7 +1091,12 @@ function polivoz_save_home_contact_data($post_id) {
         return;
     }
     $my_data = $_POST['polivoz_home_contact_field'];
-    update_post_meta($post_id, '_home_contact_key', $my_data);
+    $my_data_sanitize['name'] = sanitize_text_field($my_data['name']);
+    $my_data_sanitize['email'] = sanitize_email($my_data['email']);
+    $my_data_sanitize['mobile'] = sanitize_text_field($my_data['mobile']);
+    $my_data_sanitize['phone'] = sanitize_text_field($my_data['phone']);
+    $my_data_sanitize['address'] = sanitize_text_field($my_data['address']);
+    update_post_meta($post_id, '_home_contact_key', $my_data_sanitize);
 }
 
 /* ----------------------------------------------------------------------------/
@@ -1100,15 +1130,18 @@ function polivoz_save_home_social_data($post_id) {
         return;
     }
     $my_data = $_POST['polivoz_home_social_field'];
-    foreach ($my_data as $key => $field) {
-        $my_data[$key] = polivoz_sanitize_url($field);
+    $social_type = ['facebook','instagram','twitter','youtube','soundcloud'];
+    for($i=0;$i<=count($social_type)-1;$i++){
+        $my_data_sanitize[$social_type[$i]]=polivoz_sanitize_url($my_data[$social_type[$i]]);
     }
-    update_post_meta($post_id, '_home_social_key', $my_data);
+    update_post_meta($post_id, '_home_social_key', $my_data_sanitize);
 }
 
-function polivoz_sanitize_url($input){
-    $output = str_ireplace(array('http://','https://'), '', esc_url($input));
-    return $output;
+function polivoz_sanitize_url($input,$prefix){
+    if (empty($prefix)){
+        $prefix = array('http://','https://');
+    }
+    return rtrim(str_ireplace($prefix, '', esc_url($input)),'/');
 }
 
 
@@ -1137,7 +1170,9 @@ function polivoz_save_alt_permanlink_data($post_id) {
         return;
     }
     $my_data = $_POST['polivoz_alt_permanlink_field'];
-    update_post_meta($post_id, '_alt_permanlink_key', sanitize_text_field($my_data));
+    $my_data_sanitize = polivoz_sanitize_url($my_data, array(get_home_url().'/blog/','http://','https://'));
+    $my_data_sanitize = end(explode('/',$my_data_sanitize));
+    update_post_meta($post_id, '_alt_permanlink_key', $my_data_sanitize);
 }
 
 /* ----------------------------------------------------------------------------/
@@ -1242,6 +1277,10 @@ function polivoz_save_location_address_data($post_id) {
         return;
     }
     $my_data = $_POST['polivoz_location_address_field'];
+    $address_fields = ['country','city','province','neighborhood','cep','street','number','other'];
+    for($i=0;$i<=count($address_fields)-1;$i++){
+        $my_data_sanitize[$address_fields[$i]]=polivoz_sanitize_url($address_fields[$address_fields[$i]]);
+    }
     update_post_meta($post_id, '_location_address_key', $my_data);
 }
 
@@ -1274,7 +1313,7 @@ function polivoz_save_location_map_data($post_id) {
     }
     $my_data = $_POST['polivoz_location_map_field'];
 
-    update_post_meta($post_id, '_location_map_key', esc_url($my_data));
+    update_post_meta($post_id, '_location_map_key','http://'.polivoz_sanitize_url($my_data));
 }
 
 /* ----------------------------------------------------------------------------/
@@ -1287,13 +1326,14 @@ function polivoz_event_date_callback($post) {
     $timestamp = esc_attr(get_post_meta($post->ID, '_event_timestamp_key', true));
     echo '<p>Preencha os campos data e horário do evento. <a href="' . menu_page_url('polivoz-admin-page', false) . '#polivoz-guide-local" target="_blank"">Aprenda mais sobre locais e eventos</a></p>';
     echo '<table class="form-table"><tbody>';
+    $date_pattern = '^(?=\d{2}([\/])\d{2}\1\d{4}$)(?:0[1-9]|1\d|[2][0-8]|29(?!.02.(?!(?!(?:[02468][1-35-79]|[13579][0-13-57-9])00)\d{2}(?:[02468][048]|[13579][26])))|30(?!.02)|31(?=.(?:0[13578]|10|12))).(?:0[1-9]|1[012]).\d{4}$'; 
     echo '<tr>
             <td><b>Data</b></td>
             <td>
             <label for="polivoz_event_date_field_from_date">De </label>
-            <input type="text" id="polivoz_event_date_field_from_date" name="polivoz_event_date_field[from_date]" required value="'.sanitize_text_field($value['from_date']).'"" class="event_input_date event_input_date_time">
+            <input type="text" id="polivoz_event_date_field_from_date" pattern="'.$date_pattern.'" name="polivoz_event_date_field[from_date]" required value="'.sanitize_text_field($value['from_date']).'"" class="event_input_date event_input_date_time">
             <label for="polivoz_event_date_field_to_date"> até </label>
-            <input type="text" id="polivoz_event_date_field_to_date" name="polivoz_event_date_field[to_date]" value="'.sanitize_text_field($value['to_date']).'"" class="event_input_date event_input_date_time">
+            <input type="text" id="polivoz_event_date_field_to_date" name="polivoz_event_date_field[to_date]" pattern="'.$date_pattern.'" value="'.sanitize_text_field($value['to_date']).'"" class="event_input_date event_input_date_time">
             </td>
         </tr>';
     if(empty($value['from_time'])){
@@ -1311,7 +1351,7 @@ function polivoz_event_date_callback($post) {
             <select class="from_time select_time" id="from_time_hour">' . polivoz_interval(1, 23, $from_time[0]) . '</select>
             <label for="from_time_minute">:</label>
             <select class="from_time select_time" id="from_time_minute">' . polivoz_interval(1, 59, $from_time[1]) . '</select>
-            <input type="hidden" id="polivoz_event_date_field_from_time" name="polivoz_event_date_field[from_time]" value="' . $value['from_time'] . '"/>
+            <input type="hidden" id="polivoz_event_date_field_from_time" name="polivoz_event_date_field[from_time]" pattern="[0-9]{1}" value="' . $value['from_time'] . '"/>
             <label for="to_time_hour"> até </label>
             <select class="to_time select_time" id="to_time_hour">' . polivoz_interval(1, 23, $to_time[0]) . '</select>
             <label for="to_time_minute">:</label>
@@ -1339,8 +1379,12 @@ function polivoz_save_event_date_data($post_id) {
         return;
     }
     $my_data = $_POST['polivoz_event_date_field'];
+    $array_keys = ['from_date','to_date','from_time','to_time','all_day'];
+    for($i=0;$i<=count($array_keys)-1;$i++){
+        $my_data_sanitize[$array_keys[$i]]= sanitize_text_field($my_data[$array_keys[$i]]);
+    }
     $time_stamp = $_POST['polivoz_event_date_field_timestamp'];
-    update_post_meta($post_id, '_event_date_key', $my_data);
+    update_post_meta($post_id, '_event_date_key', $my_data_sanitize);
     update_post_meta($post_id, '_event_timestamp_key', esc_attr($time_stamp));
 }
 

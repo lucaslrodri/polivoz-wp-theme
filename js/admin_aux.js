@@ -157,7 +157,7 @@ jQuery(document).ready(function($){
     
     $('.link-externo input:radio').on('change',function(){
         hideUploader('mp3',$(this));
-        var forcedownload = $(this).parent().find('.force-download');
+        var forcedownload = $(this).parents('.mp3-external').find('.force-download');
         if ($(this).is(':checked') && $(this).val() == 'yes'){ 
             forcedownload.prop('disabled',false);
         }else
