@@ -1,0 +1,281 @@
+/*Main Carousel*/
+
+#polivoz-slider-wrap{
+    background-color:#eee;
+    box-shadow: 0px 1px 1px #eee;
+}
+
+.carousel-box {
+    height: 100%;
+    background-origin: content-box;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 1;
+}
+
+.carousel-wrap{
+    height: 100%;
+    display: table;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.carousel-inside{
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    height: 100%;
+}
+
+@media(min-width: 1201px){
+    .carousel-inside{
+        text-align: left;
+        padding-left: 20px;
+    }
+}
+
+.carousel-card{
+    display: inline-block;
+    background-color: rgba(255,255,255,.9);
+    width: 400px;
+    padding: 10px;
+    color: #333;
+    border-radius: 4px;
+    font-size: 14pt;
+    text-align: center;
+    transition: .3s; 
+}
+
+.carousel-inner-content{
+    position: absolute;
+    display: table;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 96pt; 
+    color: #333;
+}
+
+.carousel-inner-content p{
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    height: 100%;
+    width: 100%;
+}
+
+.carousel-buttons{
+    position: absolute;
+    display: table;
+    height: 100%;
+    z-index: 100;
+    font-size: 24pt;
+}
+
+@media(max-width: 768px){
+    #polivoz-slider-wrap .owl-controls{
+        display: none !important;
+    }
+    
+    .carousel-mobile-link{
+        height: 100%;
+        width: 100%;
+        background: transparent;
+        color: #333;
+    }
+    
+    .carousel-mobile-link a{
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        left: 0px;
+    }
+    
+    .carousel-mobile-link:hover, .carousel-mobile-link:visited, .carousel-mobile-link:active, .carousel-mobile-link:checked, .carousel-mobile-link:focus{
+        font-weight: normal;
+        text-decoration: none;
+        
+    }
+    
+    .carousel-mobile-link:hover{
+        color: #888;
+    }
+    
+    @media(max-width: 360px){
+        .carousel-buttons{
+            display: none;
+        }
+    }
+    
+    .carousel-mobile-link h3{
+        position: absolute;
+        width: 100%;
+        bottom: 10px;
+        right: 0px;
+        background-color: rgba(255,255,255,.8);
+    }
+    
+    .carousel-wrap{
+        width: 100%;
+    }
+}
+
+
+.carousel-buttons p{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.carousel-buttons a{
+    padding-left: 6px;
+    padding-right: 6px;
+    border-radius: 4px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.carousel-buttons a:hover{
+    background-color: #6193F7;
+    color: #fff;
+}
+
+.carousel-button-left-wrap{
+    left: 0px;
+}
+
+.carousel-button-left-wrap p{
+    text-align: left;
+}
+
+.carousel-button-right-wrap{
+    right: 0px;
+}
+
+.carousel-button-right-wrap p{
+    text-align: right;
+}
+
+.carousel-card-tablet:hover, .carousel-card-tablet:visited, .carousel-card-tablet:active, .carousel-card-tablet:hover,.carousel-card-tablet:focus{
+    text-decoration: none;
+    color: #555;
+    font-weight: normal;
+}
+
+.carousel-card-tablet:hover{
+    background-color: rgba(255,255,255,.95);
+}
+
+/* List posts */
+.veja-mais{
+    float: right;
+    text-align: right;
+    padding-right: 0px;
+    margin-top: -28px;
+}
+@media(min-width: 768px){
+    .veja-mais{
+        margin-top: -42px;
+    }
+}
+
+@media(min-width: 992px){
+    #featured-event .evento-content{
+        height: 336px;
+    }
+    #featured-event .evento-sub-title{
+        font-size: 14pt;
+    }
+}
+
+/*Eventos*/
+
+.event{
+    list-style: none;
+}
+
+.single-event{
+    margin-left: -10px;
+    margin-right: 2px;
+    margin-top: 0px;
+    width: 90%;
+    padding: 4px;
+    border: 1px #FFC019 dashed;
+}
+
+#eventos{
+    margin-top: -10px;
+}
+
+#owl-events .owl-item img {
+    width: 100%;
+    height: auto;
+}
+
+#owl-events .owl-controls {
+    text-align: center;
+}
+
+#owl-events .owl-controls .owl-page {
+    display: inline-block;
+    margin-top: 16px;
+}
+
+.anchor{
+  display: block;
+  height: 115px; /*same height as header*/
+  margin-top: -115px; /*same height as header*/
+  visibility: hidden;
+}
+
+.contact-us ul{
+    list-style-type: none;
+}
+
+/*Ajax loading*/
+.polivoz-posts-container section:not(reveal){
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all .3s;
+}
+
+.polivoz-posts-container section.reveal{
+    transform: translateY(0px);
+    opacity: 1;
+    transition: all .3s;
+}
+
+
+/*Pirate Form*/
+
+.form-control{
+    font-size: 14pt;
+}
+
+.contact_submit_wrap{
+    text-align: center;
+}
+
+    .contact_name_wrap{
+        margin-bottom: 12px !important;
+        margin-top: -20px !important;
+    }
+
+@media(min-width: 992px){
+    .contact_name_wrap{
+        margin-bottom: -7px !important;
+        margin-top: -20px !important;
+    }
+}
+
+.contact_email_wrap{
+    margin-bottom: -7px !important;
+    margin-top: -20px !important;
+}
+
+
+.form-control:focus{
+    box-shadow: none;
+    border-color: #6193F7;
+}

@@ -1,0 +1,26 @@
+Bugs conhecidos:
+Ao iniciar as configurações na página de opções há bug no uploader devido ao conflito da variável do uploader (!importante).
+Possível solução: As configurações da página de opções está parcialmente em linguagem estruturada, deve-se transformar cada seção em objetos para evitar conflito.
+Incoerência no 404 em algumas seções (!importante)
+
+Possíveis bugs:
+Erros de português (!importante)
+
+Todo:
+Adicionar mais opções de customização
+Melhor screenshoot do tema (!importante)
+Remover a dependência de plugins de contato (!importante)
+Adicionar seção de custom CSS (!médio)
+Adicionar seção de custom javascript/json
+Adicionar menu da documentação (!importante)
+Atualizar/melhorar documentação (!importante)
+Suporte ao idioma inglês (!baixo)
+Suporte a multidiomas colaborativo (../lang/)
+Portar CSS para SASS (!médio)
+JS e CSS minificados (Melhoria em desempenho) (!médio)
+Adicionar opção de forçar download para link externo na parte de anexos músicas (!importante)
+Multicolunas no wp_editor (Injetar opções de col-*-*/container/container-fluid/row-*-* do bootstrap no WYSIWYG editor do wordpress) (!muito baixo)
+Adicionar suporte menu do wordpress (!importante)
+Adicionar suporte a galeria do wordpress (!baixo)
+Organizar o código (Mover bibliotecas externas para ../vendors/ e os arquivos auxiliares para ../inc/) (!médio)
+Melhorar o sistema de 404 nas buscas (!sugestões)

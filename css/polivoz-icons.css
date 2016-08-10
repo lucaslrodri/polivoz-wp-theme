@@ -1,0 +1,120 @@
+@font-face {
+    font-family: 'polivoz-icon';
+    src:    url('../fonts/polivoz-icon.eot?duzwfo');
+    src:    url('../fonts/polivoz-icon.eot?duzwfo#iefix') format('embedded-opentype'),
+        url('../fonts/polivoz-icon.ttf?duzwfo') format('truetype'),
+        url('../fonts/polivoz-icon.woff?duzwfo') format('woff'),
+        url('../fonts/polivoz-icon.svg?duzwfo#polivoz-icon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.polivoz-icon {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'polivoz-icon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.polivoz-repeat:before {
+    content: "\e058";
+}
+.polivoz-play:before {
+    content: "\e912";
+}
+.polivoz-spinner2:before {
+    content: "\e97b";
+}
+.polivoz-spinner5:before {
+    content: "\e97e";
+}
+.polivoz-spinner8:before {
+    content: "\e981";
+}
+.polivoz-spinner9:before {
+    content: "\e982";
+}
+.polivoz-spinner10:before {
+    content: "\e983";
+}
+.polivoz-search:before {
+    content: "\e986";
+}
+.polivoz-google-plus:before {
+    content: "\ea8b";
+}
+.polivoz-google-plus2:before {
+    content: "\ea8c";
+}
+.polivoz-google-plus3:before {
+    content: "\ea8d";
+}
+.polivoz-hangouts:before {
+    content: "\ea8e";
+}
+.polivoz-google-drive:before {
+    content: "\ea8f";
+}
+.polivoz-facebook:before {
+    content: "\ea90";
+}
+.polivoz-facebook2:before {
+    content: "\ea91";
+}
+.polivoz-instagram:before {
+    content: "\ea92";
+}
+.polivoz-whatsapp:before {
+    content: "\ea93";
+}
+.polivoz-spotify:before {
+    content: "\ea94";
+}
+.polivoz-twitter:before {
+    content: "\ea96";
+}
+.polivoz-rss:before {
+    content: "\ea9b";
+}
+.polivoz-rss2:before {
+    content: "\ea9c";
+}
+.polivoz-youtube:before {
+    content: "\ea9d";
+}
+.polivoz-youtube2:before {
+    content: "\ea9e";
+}
+.polivoz-vimeo:before {
+    content: "\eaa0";
+}
+.polivoz-vimeo2:before {
+    content: "\eaa1";
+}
+.polivoz-tumblr:before {
+    content: "\eab9";
+}
+.polivoz-tumblr2:before {
+    content: "\eaba";
+}
+.polivoz-soundcloud2:before {
+    content: "\eac4";
+}
+.polivoz-linkedin:before {
+    content: "\eac9";
+}
+.polivoz-linkedin2:before {
+    content: "\eaca";
+}
+.polivoz-linhas:before {
+    content: "\e900";
+}
+

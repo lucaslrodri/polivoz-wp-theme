@@ -1,0 +1,148 @@
+.btn-link:checked, .btn-link:active, .btn-link:visited, .btn-link:focus{
+    text-decoration: none !important;
+}
+
+.card-local{
+    margin-bottom: 30px;
+    position: relative;
+    border-radius: 4px;
+    border-color: #ccc;
+    border-width: 1px;
+    border-style: solid;
+    overflow:hidden;
+}
+
+.local-content{
+    display: block;
+    font-size: 14pt;
+    margin-bottom: -200px;
+}
+
+.btn-local-content{
+    float: right;
+    font-size: 14pt;
+}
+
+.btn-local-content .btn-default{
+    font-size: 14pt !important;
+}
+
+.card-local:hover .local-content{
+    margin-bottom:2px;
+    transition: .3s;
+}
+
+.card-local:hover .local-title{
+    border-top: 1px #6193F7 solid;
+}
+
+.local-title{
+    background-color: rgba(255,255,255,.95);
+    position: absolute;
+    padding: 0px 14px;
+    width: 100%;
+    bottom: 0px;
+    border-top: 1px #fff solid;
+}
+
+.btn-link{
+    background-color: transparent;
+}
+
+.card-local p{
+    color: #333;
+}
+
+.card-local h3{
+    margin: 6px;
+    color: #333;
+    position: relative;
+}
+
+.btn-default{
+    background-color: transparent;
+    font-size: 14pt;
+}
+
+.local-sub-title{
+    font-size: 12pt;
+}
+
+.wrapp-content{
+    display: block;
+    overflow:hidden;
+    color: #333;
+}
+
+
+.local-content-open{
+    display: block;
+}
+
+.search-input-open{
+    padding-right: 20px;
+}
+
+.local-mobile-content{
+    width: 100%;
+    border-top: 1px #6193F7 solid;
+    padding: 6px;
+}
+
+.local-mobile-content p{
+    font-size: 14pt;
+    text-align: justify;
+}
+
+.text-center .local-mobile-content{
+    font-size: 12pt;
+    text-align: center;
+}
+
+.btn-local-content-mobile{
+    margin: auto;
+    text-align: center;
+    font-size: 14pt;
+}
+
+.local-img{
+    position: relative;
+    height: 320px;
+    width: 100%;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size:cover;
+    margin: 0 auto;
+}
+
+.local-inner-content{
+    position: absolute;
+    display: table;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 96pt; 
+    color: #333;
+}
+
+.local-inner-content p{
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    height: 100%;
+    width: 100%;
+}
+
+/*Ajax loading*/
+.polivoz-posts-container section:not(reveal){
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all .3s;
+}
+
+.polivoz-posts-container section.reveal{
+    transform: translateY(0px);
+    opacity: 1;
+    transition: all .3s;
+}
