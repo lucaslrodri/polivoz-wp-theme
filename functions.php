@@ -9,6 +9,8 @@ require get_template_directory() . '/inc/post-types.php';
 require get_template_directory() . '/inc/ajax.php';
 require get_template_directory() . '/inc/enqueue.php';
 
+require get_template_directory() . '/inc/mobiledetectapi/Mobile_Detect.php';
+
 
 /* =============================================================================
   MAIN FUNCTION
@@ -490,5 +492,18 @@ function limit_excerpt($limit) {
     $excerpt = implode(" ",$excerpt);
     } 
     return $excerpt;
+}
+
+function isBrowserType($arguments){
+    $browser = $_SERVER['HTTP_USER_AGENT'];
+    $result = false;
+    foreach ($arguments as $argument){
+        if((strstr($browser,$argument)!== FALSE)){
+            $result = true;
+        }  else {
+           $result = false; 
+        }
+    }
+    return $result;
 }
 

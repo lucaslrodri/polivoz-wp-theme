@@ -23,7 +23,11 @@
 }
 
 nav .active a:first-letter{
-    color: #FFC019;
+    color: #FFC019 !important;
+}
+
+nav .active .first-letter{
+    color: #FFC019 !important;
 }
 
 nav .active > a{
@@ -207,29 +211,6 @@ nav .active > a{
 
     .navbar-nav .dropdown-menu a:hover{
         color: #888 !important;
-    }
-    .menu-mobile .navbar-nav .dropdown-menu:before {
-        position: absolute;
-        top: -7px;
-        right: 9px;
-        display: inline-block;
-        box-shadow: none;
-        border-right: 7px solid transparent;
-        border-bottom: 7px solid #ccc;
-        border-left: 7px solid transparent;
-        border-bottom-color: rgba(0, 0, 0, 0.2);
-        content: '';
-    }
-
-    .menu-mobile .navbar-nav .dropdown-menu:after {
-        position: absolute;
-        top: -6px;
-        right: 10px;
-        display: inline-block;
-        border-right: 6px solid transparent;
-        border-bottom: 6px solid #ffffff;
-        border-left: 6px solid transparent;
-        content: '';
     }
 }
 

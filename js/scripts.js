@@ -12,10 +12,10 @@ jQuery(document).ready(function($){
         var img = $('.parallax-window').data('image');
         if(typeof(img)!=='undefined')
             $('.parallax-window').css('background-image','url('+img+')');
-        var parallax_height = Math.min($(window).height()/1.3-topMenuHeight,$(window).width()/2.33)+'px';
+        var parallax_height = Math.min($(window).height()/1.3 - topMenuHeight,$(window).width()/2.33)+'px';
         $('.parallax-window').css('min-height',parallax_height);
         $('.carousel-box').css('min-height',parallax_height);
-        $('.carousel-wrap').css('min-height',parallax_height);
+        $('.carousel-wrap').css('height',parallax_height);
         $('.carousel-inner-content').css('min-height',parallax_height);
         $('#polivoz-slider-wrap').css('min-height',parallax_height);
         $('.carousel-buttons').each(function(){
@@ -26,31 +26,31 @@ jQuery(document).ready(function($){
         var topDistance = $(window).scrollTop();
         if (($(window).width() < 1201)||(topDistance>100)||($(window).height() < 560)) {
             $("#main-menu").removeClass("menu-desktop").addClass("menu-mobile");
-            topMenuHeight=50;
             addExtraHeight = 0;
         }else{
             addExtraHeight = 50;
             $("#main-menu").addClass("menu-desktop").removeClass("menu-mobile");
-           topMenuHeight=100;
         }
         if ($('body').hasClass("admin-bar")){
             var wp_menu = $('#wpadminbar').outerHeight();
             $('.anchor').css('margin-top',"-"+(topMenuHeight+wp_menu)+"px");
             $('.anchor').css('height',(topMenuHeight+wp_menu)+"px");
-            $('body').css('padding-top', (topMenuHeight+wp_menu)+'px !important');
             $('#main-menu').css("top",wp_menu);
             $('#wpadminbar').css("position","fixed");
             $('.space').height(wp_menu);
         }else{
             $('.anchor').css('margin-top',"-"+topMenuHeight+"px");
-            $('body').css('padding-top', (topMenuHeight)+'px !important');
             $('.anchor').css('height',topMenuHeight+"px");
             $('#main-menu').css("top",0);
             $('.space').height(0);
         }
-        $("body").attr("style","padding-top:"+topMenuHeight+'px;');
+        $("body").attr("style","padding-top:",addExtraHeight + topMenuHeight+'px !important;');
+        $("body").css("padding-top",addExtraHeight + topMenuHeight);
         $('.galeria-img').height((9/16)*$('.galeria-img').width()+40);
         setParalaxSize();
+        $('[data-spy="scroll"]').each(function () {
+          $(this).scrollspy('refresh');
+        });
     }
     
     $('[data-toggle="tooltip"]').tooltip();
@@ -59,49 +59,40 @@ jQuery(document).ready(function($){
     $('#main-menu').css('visibility', 'inherit');
     $(window).resize(setMenuType);
     
-    // Cache selectors
-    var lastId,
-        // All list items
-        menuItems = $(".home-link"),
-        // Anchors corresponding to menu items
-        scrollItems = menuItems.map(function(){
-          var item = $($(this).attr("href"));
-          if (item.length) { return item; }
-        });
-        
-        var lastScroll =0;
-    // Bind click handler to menu items
     // so we can get a fancy scroll animation
-    $('.glyphicon-chevron-up').click(function(){
+    $('.glyphicon-chevron-up').click(function(e){
+        e.preventDefault();
             $('html, body').stop().animate({ 
                 scrollTop: 0}, 300);
     });
-    $(".active-menu-external-link a").on('click',function(e){
-        var href = $(this).attr("href"),
-        offsetTop = href === "#" ? 0 : $(href).offset().top;
-        $('html, body').stop().animate({ 
-          scrollTop: offsetTop
-      }, 300);
-      e.preventDefault();
+    
+    $('.home-menu .navbar-brand').click(function(e){
+        e.preventDefault();
+            $('html, body').stop().animate({ 
+                scrollTop: 0}, 300);
     });
-    menuItems.click(function(e){
-      var href = $(this).attr("href"),
-      offsetTop = href === "#" ? 0 : $(href).offset().top;
-      if (href === "#"){
-          addExtraHeight = 0;
+    
+    $('a[href*="#"]:not([href="#"])').click(function(e) {
+      if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+        var target = $(this.hash);
+        target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+        if (target.length) {
+          $('html, body').animate({
+            scrollTop: target.offset().top
+          }, 300);
+          return false;
+        }
       }
-      $('html, body').stop().animate({ 
-          scrollTop: offsetTop + addExtraHeight
-      }, 300);
-      e.preventDefault();
     });
+    
     $('section:not(reveal)').each(function(){
         if(isVisible($(this))){
             $(this).addClass('reveal').find('.polivoz-carousel-thumb').carousel();
     }});
 
-    // Bind to scroll
+    var lastScroll = 0;
     $(window).on("scroll touchmove",function(){
+        setMenuType();
        var scrollWindow = $(window).scrollTop();
        
         if(Math.abs(scrollWindow-lastScroll) >$(window).height()*0.1){
@@ -111,27 +102,7 @@ jQuery(document).ready(function($){
                     $(this).addClass('reveal').find('.polivoz-carousel-thumb').carousel();
                 }
             });
-            
         };
-        setMenuType();
-       // Get container scroll position
-       var fromTop = $(this).scrollTop() + 1;
-
-       // Get id of current scroll item
-       var cur = scrollItems.map(function(){
-         if ($(this).offset().top < fromTop)
-           return this;
-       });
-       // Get the id of the current element
-       cur = cur[cur.length-1];
-       var id = cur && cur.length ? cur[0].id : "";
-       if (lastId !== id) {
-           lastId = id;
-           // Set/remove active class
-           menuItems
-             .parent().removeClass("active")
-             .end().filter("[href='#"+id+"']").parent().addClass("active");
-       }
     });
      
     ///-----------------------------------------------------------
@@ -139,7 +110,6 @@ jQuery(document).ready(function($){
     //------------------------------------------------------------
     
     var polivozSlider =  $("#polivoz-slider");
-    var polivozSliderWrap = $("#polivoz-slider-wrap");
             
     polivozSlider.owlCarousel({
       autoPlay: 5000,

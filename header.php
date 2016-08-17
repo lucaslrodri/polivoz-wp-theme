@@ -18,9 +18,37 @@
     else{wp_title('');echo ' &#45; ';bloginfo('name');}
     ?></title>
     <?php wp_head(); ?>
+    <?php if(isBrowserType(array('Firefox')===FALSE)): ?>
+    <style>
+        @media(min-width:768px){
+            .menu-mobile .navbar-nav .dropdown-menu:before {
+                position: absolute;
+                top: -7px;
+                right: 9px;
+                display: inline-block;
+                box-shadow: none;
+                border-right: 7px solid transparent;
+                border-bottom: 7px solid #ccc;
+                border-left: 7px solid transparent;
+                border-bottom-color: rgba(0, 0, 0, 0.2);
+                content: '';
+            }
 
+            .menu-mobile .navbar-nav .dropdown-menu:after {
+                position: absolute;
+                top: -6px;
+                right: 10px;
+                display: inline-block;
+                border-right: 6px solid transparent;
+                border-bottom: 6px solid #ffffff;
+                border-left: 6px solid transparent;
+                content: '';
+            }
+        }
+    </style>
+    <?php endif; ?>
   </head>
-  <body <?php body_class("preload"); ?>>
+  <body <?php body_class("preload"); if((is_front_page())){ echo 'data-spy="scroll" data-target="#main-menu"';} ?>>
 <nav class="navbar navbar-default navbar-fixed-top" id="main-menu">
   <div class="container">
     <!-- MenuHeader -->
@@ -59,8 +87,12 @@
             $menu_query = new WP_query($menu_args);
         ?>
         <?php if ($menu_query->have_posts()) : ?>
-                <?php while ( $menu_query->have_posts() ) : $menu_query->the_post(); ?>
-                    <li><a <?php if((is_front_page())){ echo 'class="home-link"';}?> href="<?php if (!(is_front_page())){echo get_home_url();} ?>#<?php echo $post->post_name; ?>"><?php the_title(); ?></a></li>
+                <?php while ( $menu_query->have_posts() ) : $menu_query->the_post(); 
+                $title = get_the_title();
+                $title_first_letter = mb_substr($title,0,1);
+                $title_other = mb_substr($title,1);
+                ?>
+                    <li><a <?php if((is_front_page())){ echo 'class="home-link"';}?> href="<?php if (!(is_front_page())){echo get_home_url();} ?>#<?php echo $post->post_name; ?>"><?php echo '<span class="first-letter">'.$title_first_letter.'</span>'.$title_other; ?></a></li>
                 <?php endwhile ;?>
         <?php endif; ?>
         <?php wp_reset_postdata(); $current_page_permanlink = get_permalink(); ?>
