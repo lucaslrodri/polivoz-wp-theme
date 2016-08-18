@@ -199,6 +199,8 @@ jQuery(document).ready(function($){
         location.href = '#formulario-polivoz';
     });
     
+    //powr counter
+    
 });
 
 

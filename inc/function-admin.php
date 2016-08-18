@@ -46,11 +46,15 @@ function polivoz_custom_settings(){
     register_setting('polivoz-config-section-group', 'polivoz_template_musica_name_plural','sanitize_text_field');
     register_setting('polivoz-config-section-group', 'polivoz_template_musica_nota_musical','sanitize_nota_musical');
     register_setting('polivoz-config-section-group', 'polivoz_template_musica_menu');
+    //Rodapé
+    register_setting('polivoz-config-section-group', 'polivoz_rodape_text','sanitize_text_field');
+    register_setting('polivoz-config-section-group', 'polivoz_rodape_widget');
     //Adicionando a seção
     add_settings_section('polivoz-template-options', 'Configurações adicionais da Seção de Galeria', 'polivoz_slug_options', 'polivoz-config-section');
     add_settings_section('polivoz-local-options', 'Configurações adicionais da Seção de Locais', 'polivoz_local_options', 'polivoz-config-section');
     add_settings_section('polivoz-evento-options', 'Configurações adicionais da Seção de Eventos', 'polivoz_evento_options', 'polivoz-config-section');
     add_settings_section('polivoz-musica-options', 'Configurações adicionais da Seção de Músicas', 'polivoz_musica_options', 'polivoz-config-section');
+    add_settings_section('polivoz-rodape-options', 'Configurações de conteúdo do Rodapé', 'polivoz_rodape_options', 'polivoz-config-section');
     //Adicionando os locais dos dados
     //Galeria
     add_settings_field('polivoz-template-galeria-name', 'Título da Seção Galeria', 'polivoz_template_galeria_name', 'polivoz-config-section', 'polivoz-template-options');
@@ -77,6 +81,9 @@ function polivoz_custom_settings(){
     add_settings_field('polivoz-template-musica-header', 'Imagem destacada para a Seção de Músicas', 'polivoz_template_musica_header', 'polivoz-config-section', 'polivoz-musica-options');
     add_settings_field('polivoz-template-musica-nota-musical', 'Nota musical', 'polivoz_template_musica_nota_musical', 'polivoz-config-section', 'polivoz-musica-options');
     add_settings_field('polivoz-template-musica-menu', 'Mostrar no menu?', 'polivoz_template_musica_menu', 'polivoz-config-section', 'polivoz-musica-options');
+   //Rodapé
+   add_settings_field('polivoz-rodape-text', 'Texto do rodapé', 'polivoz_rodape_text', 'polivoz-config-section', 'polivoz-rodape-options');
+   add_settings_field('polivoz-rodape-widget', 'Shortcodes ou IFrames do rodapé', 'polivoz_rodape_widget', 'polivoz-config-section', 'polivoz-rodape-options');
 }
 
     //================================================================//
@@ -110,6 +117,10 @@ function polivoz_evento_options(){
 
 function polivoz_musica_options(){
     echo '<p>Abaixo está disponível as configurações adicionais para customização da página de músicas e das músicas em geral.</p>';
+}
+
+function polivoz_rodape_options(){
+    echo '<p>Abaixo está disponível as configurações do rodapé.</p>';
 }
 
     //================================================================//
@@ -324,3 +335,18 @@ function polivoz_template_musica_nota_musical(){
      $value = filter_var($value, FILTER_VALIDATE_REGEXP,array("options"=>array("regexp"=>"/([A-Z|a-z|0])\.*/")));
      return $value;
  }
+ 
+//Rodapé
+ 
+function polivoz_rodape_text(){
+    $rodape_text = sanitize_text_field(get_option('polivoz_rodape_text'));
+    echo '<textarea class="widefat" rows="2" name="polivoz_rodape_text" placeholder="Digite o texto que aparecerá no rodapé.">'.$rodape_text.'</textarea>';
+    echo '<p>Digite o texto (Se existir) que aparecerá no rodapé <a href="' . menu_page_url('polivoz-admin-page', false) . '#polivoz-rodape" target="_blank"">Aprenda mais sobre rodapé</a></p>';
+}
+
+function polivoz_rodape_widget(){
+    $rodape_widget = esc_attr(get_option('polivoz_rodape_widget'));
+    if (empty($rodape_widget)){$rodape_widget ='';}
+    echo '<textarea class="widefat" rows="2" name="polivoz_rodape_widget" placeholder="Digite um ou mais ShortCode ou Iframe caso queira mostrar um widget no rodapé. É aceito códigos em HTML.">'.$rodape_widget.'</textarea>';
+    echo '<p>Digite um Shortcode ou iFrame que aparecerá no rodapé <a href="' . menu_page_url('polivoz-admin-page', false) . '#polivoz-rodape" target="_blank"">Aprenda mais sobre rodapé</a></p>';
+}

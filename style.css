@@ -39,6 +39,23 @@ footer{
     margin-top: 20px;
 }
 
+footer .center-block{
+    background-color: transparent !important;
+    width: 20%;
+    display: table;
+    text-align: center;
+    padding: 6px;
+}
+
+.center-block-wrap{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.center-block-wrap table{
+    display: inline-table;
+}
+
 body {
   font-family: 'Open Sans Condensed', sans-serif;
 }
@@ -513,4 +530,24 @@ span.month.active:hover,span.year.active:hover,span.day.active:hover{
 
 #btn-clear-date{
     margin-left: 0px;
+}
+
+/*footer widgets*/
+
+.footer-sidebar{
+    display: table;
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+    table-layout:fixed;
+}
+
+.widget-centered-wrap{
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.widget-centered{
+    display: inline-block !important;
 }

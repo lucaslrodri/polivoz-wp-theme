@@ -47,6 +47,26 @@ if (!current_user_can('edit_posts')) {
 }
 
 /* =============================================================================
+  WIDGET RODAPÉ
+  ============================================================================= */
+function polivoz_widget_setup() {
+    register_sidebar(
+        array(
+           'name' => 'Rodapé',
+            'id' => 'footer-widget',
+            'class' => 'footer-widget-admin',
+            'descrition' => 'Widgets do rodapé',
+            'before_widget' => '<div class="widget-centered-wrap"><div class="widget-centered text-center %2$s" id="%1$s">',
+            'after_widget' => '</div></div>',
+            'before_title' => '<h3 class="widget-title">',
+            'after_title' => '</h3>',
+        )
+   );
+}
+
+add_action('widgets_init','polivoz_widget_setup');
+
+/* =============================================================================
   BREADCRUMBS
   ============================================================================= */
 
